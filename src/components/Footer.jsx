@@ -17,8 +17,10 @@ const Footer = () => {
       </nav>
       <nav>
         <h6 className="footer-title">Contact info</h6>
-        <a className="link link-hover flex gap-1 items-center justify-center"><IoMdMail />
-gardening@hub.com</a>
+        <a className="link link-hover flex gap-1 items-center justify-center">
+          <IoMdMail />
+          gardening@hub.com
+        </a>
         <a className="link link-hover flex gap-1 items-center justify-center">
           <IoCall /> 01856638698
         </a>
@@ -30,28 +32,21 @@ gardening@hub.com</a>
       <nav>
         <h6 className="footer-title">Social Links</h6>
         <div className="grid grid-flow-col gap-4 text-2xl">
-          <a>
-            <Link to="https://x.com/home">
-              <FaTwitter />
-            </Link>
-          </a>
-          <a>
-            <Link to="https://www.youtube.com/">
-              <FaYoutube />
-            </Link>
-          </a>
+          <Link to="https://x.com/home">
+            <FaTwitter />
+          </Link>
 
-          <a>
-            <Link to="https://www.facebook.com/">
-              <FaFacebook />
-            </Link>
-          </a>
+          <Link to="https://www.youtube.com/">
+            <FaYoutube />
+          </Link>
 
-          <a>
-            <Link to="https://web.whatsapp.com/">
-              <FaWhatsapp />
-            </Link>
-          </a>
+          <Link to="https://www.facebook.com/">
+            <FaFacebook />
+          </Link>
+
+          <Link to="https://web.whatsapp.com/">
+            <FaWhatsapp />
+          </Link>
         </div>
       </nav>
     </footer>

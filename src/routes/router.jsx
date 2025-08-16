@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import HomeLayout from "../layouts/HomeLayout";
 import Home from "../components/Home";
+import ExploreGardener from "../pages/ExploreGardener";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/exploreGarden",
-        element: <h2>Explore LayOut</h2>,
+        loader: () => fetch("http://localhost:3000/exploreGarden"),
+        Component: ExploreGardener,
       },
       {
         path: "/browseTips",
