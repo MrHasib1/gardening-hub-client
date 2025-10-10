@@ -1,34 +1,92 @@
 import React from "react";
+import { Link } from "react-router";
 
-const register = () => {
+const Register = () => {
   return (
-    <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
-        </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <div className="card-body">
-            <fieldset className="fieldset">
-              <label className="label">Email</label>
-              <input type="email" className="input" placeholder="Email" />
-              <label className="label">Password</label>
-              <input type="password" className="input" placeholder="Password" />
-              <div>
-                <a className="link link-hover">Forgot password?</a>
-              </div>
-              <button className="btn btn-neutral mt-4">Login</button>
-            </fieldset>
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-200 flex items-center justify-center p-6">
+      <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-green-200 p-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-green-700 text-center mb-4">
+          🌱 Register Now!
+        </h1>
+        <p className="text-center text-green-600 mb-6 text-sm ">
+          🌿 Join our Gardening Community and share plants 🌿
+        </p>
+
+        <form className="space-y-4">
+          {/* Name */}
+          <div>
+            <label className="label-text text-green-700 font-semibold">
+              Name
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
+              placeholder="Enter your name"
+            />
           </div>
-        </div>
+
+          {/* Email */}
+          <div>
+            <label className="label-text text-green-700 font-semibold">
+              Email
+            </label>
+            <input
+              type="email"
+              className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
+              placeholder="Enter your email"
+            />
+          </div>
+
+          {/* Photo URL */}
+          <div>
+            <label className="label-text text-green-700 font-semibold">
+              Photo URL
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
+              placeholder="Paste your profile photo URL"
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="label-text text-green-700 font-semibold">
+              Password
+            </label>
+            <input
+              type="password"
+              className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
+              placeholder="Create a strong password"
+            />
+
+            <a className="link text-green-600 hover:text-green-800 text-sm ">
+              Forgot password?
+            </a>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="btn w-full bg-green-500 hover:bg-green-600 text-white border-none transition-all duration-200 shadow-md "
+          >
+            🌼 Register 🌼
+          </button>
+
+          {/* Login Redirect */}
+          <p className="text-center mt-1 text-green-600">
+            Already have an account?{" "}
+            <Link
+              to="/auth/login"
+              className="font-bold text-secondary hover:underline"
+            >
+              Login
+            </Link>
+          </p>
+        </form>
       </div>
     </div>
   );
 };
 
-export default register;
+export default Register;

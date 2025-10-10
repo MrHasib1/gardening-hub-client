@@ -4,6 +4,9 @@ import Home from "../components/Home";
 import ExploreGardener from "../pages/ExploreGardener";
 import ShareGardeners from "../pages/ShareGardeners";
 import error from "../pages/error";
+import AuthLayout from "../layouts/AuthLayout";
+import register from "../pages/register";
+import Login from "../pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -33,8 +36,20 @@ const router = createBrowserRouter([
 
   {
     path: "/auth",
-    element: <h2>Auth LayOut</h2>,
+    element: <AuthLayout></AuthLayout>,
+    children: [
+      {
+        index: true,
+        path: "login",
+        Component: Login,
+      },
+      {
+        path: "register",
+        Component: register,
+      },
+    ],
   },
+
   {
     path: "/*",
     Component: error,
