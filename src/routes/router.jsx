@@ -3,6 +3,7 @@ import HomeLayout from "../layouts/HomeLayout";
 import Home from "../components/Home";
 import ExploreGardener from "../pages/ExploreGardener";
 import ShareGardeners from "../pages/ShareGardeners";
+import error from "../pages/error";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/*",
-    element: <h2>Error 404</h2>,
+    Component: error,
   },
 ]);
 
