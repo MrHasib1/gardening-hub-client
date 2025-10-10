@@ -14,6 +14,12 @@ const Navbar = () => {
       <li className="font-bold">
         <NavLink to="/browseTips">Browse Tips</NavLink>
       </li>
+      <li className="font-bold">
+        <NavLink to="/shareGardeners">Share a Garden Tip</NavLink>
+      </li>
+      <li className="font-bold">
+        <NavLink to="/browseTips">My Tips</NavLink>
+      </li>
     </>
   );
 
@@ -59,7 +65,9 @@ const Navbar = () => {
 
       {/* Right: Login Button */}
       <div className="navbar-end">
-        <a className="btn btn-outline text-white font-bold btn-sm bg-green-400">Login</a>
+        <a className="btn btn-outline text-white font-bold btn-sm bg-green-400">
+          Login
+        </a>
       </div>
     </div>
   );
