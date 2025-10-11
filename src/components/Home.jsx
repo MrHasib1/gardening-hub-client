@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import FeatureGardeners from "../pages/FeatureGardeners";
 import TrendingTips from "../pages/TrendingTips";
 import PlantGuideSection from "../pages/PlantGuideSection";
+import FlowerGarden from "./FlowerGarden";
 
 const Home = () => {
   return (
@@ -19,7 +20,10 @@ const Home = () => {
 
         <TrendingTips></TrendingTips>
 
+        {/* extra section */}
         <PlantGuideSection></PlantGuideSection>
+
+        <FlowerGarden></FlowerGarden>
       </div>
     </div>
   );
