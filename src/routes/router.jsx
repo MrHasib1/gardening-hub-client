@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import HomeLayout from "../layouts/HomeLayout";
 import Home from "../components/Home";
-import ExploreGardener from "../pages/ExploreGardener";
 import ShareGardeners from "../pages/ShareGardeners";
 import error from "../pages/error";
 import AuthLayout from "../layouts/AuthLayout";
@@ -16,12 +15,12 @@ const router = createBrowserRouter([
       {
         index: true,
         path: "/",
+        loader: () => fetch("http://localhost:3000/featureGarden"),
         Component: Home,
       },
       {
         path: "/exploreGarden",
-        loader: () => fetch("http://localhost:3000/exploreGarden"),
-        Component: ExploreGardener,
+        element: <h1>hi</h1>,
       },
       {
         path: "/browseTips",
