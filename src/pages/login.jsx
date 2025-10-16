@@ -1,7 +1,52 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const { user, setUser, signIn } = use(AuthContext);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        // console.log(user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Successfully",
+          color: "#065f46",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
+          },
+        });
+        setUser(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // alert(errorMessage);
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed 😢",
+          text: errorMessage,
+          background: "#fef2f2",
+          color: "#991b1b",
+          confirmButtonColor: "#dc2626",
+          confirmButtonText: "Try Again",
+        });
+        // ..
+      });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-200 flex items-center justify-center p-6">
       <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-green-200 p-8">
@@ -15,16 +60,18 @@ const Login = () => {
         </p>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4">
           {/* Email */}
           <div>
             <label className="label-text text-green-700 font-semibold">
               Email
             </label>
             <input
+              name="email"
               type="email"
               className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
               placeholder="Enter your email"
+              required
             />
           </div>
 
@@ -34,9 +81,11 @@ const Login = () => {
               Password
             </label>
             <input
+              name="password"
               type="password"
               className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
               placeholder="Enter your password"
+              required
             />
             <div className="mt-2">
               <a className="link text-green-600 hover:text-green-800 text-sm">

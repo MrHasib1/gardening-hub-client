@@ -50,7 +50,7 @@ const Navbar = () => {
           background: "#fef2f2",
           color: "#991b1b",
           confirmButtonColor: "#dc2626",
-          confirmButtonText: "Try Again",
+          confirmButtonText: "Ok",
         });
       });
   };
@@ -97,19 +97,21 @@ const Navbar = () => {
       {/* Right: Login Button */}
       <div className="navbar-end gap-2">
         {user ? (
-          <button
-            onClick={() => handleLogout()}
-            className="btn btn-secondary text-white font-bold btn-sm  "
-          >
-            Logout
-          </button>
-        ) : (
           <>
             <div className="avatar">
               <div className="w-10 rounded-full">
                 <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
               </div>
             </div>
+            <button
+              onClick={() => handleLogout()}
+              className="btn btn-secondary text-white font-bold btn-sm  "
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
             <button className="btn btn-outline text-white font-bold btn-sm bg-green-400">
               Login
             </button>
