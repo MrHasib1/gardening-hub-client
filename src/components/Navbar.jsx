@@ -1,8 +1,10 @@
-import React from "react";
+import React, { use } from "react";
 import { NavLink } from "react-router";
 import gardeningHub from "../assets/logo.jpg";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Navbar = () => {
+  const { user } = use(AuthContext);
   const links = (
     <>
       <li className="font-bold">
@@ -56,6 +58,8 @@ const Navbar = () => {
         </a>
       </div>
 
+ 
+
       {/* Center: Horizontal Menu for Large Screens */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 flex flex-row gap-5">
@@ -64,7 +68,12 @@ const Navbar = () => {
       </div>
 
       {/* Right: Login Button */}
-      <div className="navbar-end">
+      <div className="navbar-end gap-2">
+        <div className="avatar">
+          <div className="w-10 rounded-full">
+            <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+          </div>
+        </div>
         <a className="btn btn-outline text-white font-bold btn-sm bg-green-400">
           Login
         </a>

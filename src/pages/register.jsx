@@ -1,27 +1,65 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Register = () => {
+  const { createUser, setUser } = use(AuthContext);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const photo = form.photo.value;
+    const password = form.password.value;
+    console.log(name, email, password, photo);
+
+    const upperCase = /[A-Z]/.test(password);
+    const lowerCase = /[a-z]/.test(password);
+    const specialChar = /[!@#%^&*(),.?":<>|{}]/.test(password);
+    const LongPassword = password.length >= 8;
+    if (!upperCase || !lowerCase || !specialChar || !LongPassword) {
+      alert(
+        "The password should be at least 8 characters and include 1 uppercase, 1 lowercase, and a special character."
+      );
+      return;
+    }
+
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        // console.log(user);
+        setUser(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+        // ..
+      });
+  };
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-200 flex items-center justify-center p-6">
       <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-green-200 p-8">
         <h1 className="text-3xl md:text-4xl font-bold text-green-700 text-center mb-4">
-          🌱 Register Now!
+          🌱 Register Now! 🌱
         </h1>
         <p className="text-center text-green-600 mb-6 text-sm ">
           🌿 Join our Gardening Community and share plants 🌿
         </p>
 
-        <form className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-4">
           {/* Name */}
           <div>
             <label className="label-text text-green-700 font-semibold">
               Name
             </label>
             <input
+              name="name"
               type="text"
               className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
               placeholder="Enter your name"
+              required
             />
           </div>
 
@@ -31,9 +69,11 @@ const Register = () => {
               Email
             </label>
             <input
+              name="email"
               type="email"
               className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
               placeholder="Enter your email"
+              required
             />
           </div>
 
@@ -43,9 +83,11 @@ const Register = () => {
               Photo URL
             </label>
             <input
+              name="photo"
               type="text"
               className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
               placeholder="Paste your profile photo URL"
+              required
             />
           </div>
 
@@ -55,9 +97,11 @@ const Register = () => {
               Password
             </label>
             <input
+              name="password"
               type="password"
               className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
               placeholder="Create a strong password"
+              required
             />
 
             <a className="link text-green-600 hover:text-green-800 text-sm ">

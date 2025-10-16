@@ -7,10 +7,11 @@ const Login = () => {
       <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-green-200 p-8">
         {/* Title */}
         <h1 className="text-3xl md:text-4xl font-bold text-green-700 text-center mb-4">
-          🌿 Login Now!
+          🌿 Login Now! 🌿
         </h1>
         <p className="text-center text-green-600 mb-6 text-sm md:text-base">
-          Welcome back to <span className="font-semibold">GardeningHub</span> — let’s keep growing together 🌱
+          Welcome back to <span className="font-semibold">GardeningHub</span> —
+          let’s keep growing together 🌱
         </p>
 
         {/* Form */}
