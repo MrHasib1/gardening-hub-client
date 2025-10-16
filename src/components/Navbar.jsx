@@ -2,9 +2,10 @@ import React, { use } from "react";
 import { NavLink } from "react-router";
 import gardeningHub from "../assets/logo.jpg";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const { user } = use(AuthContext);
+  const { user, logOut } = use(AuthContext);
   const links = (
     <>
       <li className="font-bold">
@@ -25,6 +26,34 @@ const Navbar = () => {
     </>
   );
 
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Logout Successfully",
+          color: "#065f46",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
+          },
+        });
+      })
+      .catch((error) => {
+        // An error happened.
+        Swal.fire({
+          icon: "error",
+          title: "Logout Failed 😢",
+          text: "try again logout",
+          background: "#fef2f2",
+          color: "#991b1b",
+          confirmButtonColor: "#dc2626",
+          confirmButtonText: "Try Again",
+        });
+      });
+  };
   return (
     <div className="navbar shadow-sm  ">
       {/* Left: Logo + Dropdown for mobile */}
@@ -58,8 +87,6 @@ const Navbar = () => {
         </a>
       </div>
 
- 
-
       {/* Center: Horizontal Menu for Large Screens */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 flex flex-row gap-5">
@@ -69,14 +96,25 @@ const Navbar = () => {
 
       {/* Right: Login Button */}
       <div className="navbar-end gap-2">
-        <div className="avatar">
-          <div className="w-10 rounded-full">
-            <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
-          </div>
-        </div>
-        <a className="btn btn-outline text-white font-bold btn-sm bg-green-400">
-          Login
-        </a>
+        {user ? (
+          <button
+            onClick={() => handleLogout()}
+            className="btn btn-secondary text-white font-bold btn-sm  "
+          >
+            Logout
+          </button>
+        ) : (
+          <>
+            <div className="avatar">
+              <div className="w-10 rounded-full">
+                <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+              </div>
+            </div>
+            <button className="btn btn-outline text-white font-bold btn-sm bg-green-400">
+              Login
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

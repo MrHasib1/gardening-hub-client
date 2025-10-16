@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const { createUser, setUser } = use(AuthContext);
@@ -19,9 +20,11 @@ const Register = () => {
     const specialChar = /[!@#%^&*(),.?":<>|{}]/.test(password);
     const LongPassword = password.length >= 8;
     if (!upperCase || !lowerCase || !specialChar || !LongPassword) {
-      alert(
-        "The password should be at least 8 characters and include 1 uppercase, 1 lowercase, and a special character."
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "The password should be at least 8 characters and include 1 uppercase, 1 lowercase, and a special character.!",
+      });
       return;
     }
 
@@ -29,12 +32,32 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         // console.log(user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "🎉 Account Register Successfully",
+          color: "#065f46",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
+          },
+        });
         setUser(user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage);
+        // alert(errorMessage);
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed 😢",
+          text: errorMessage,
+          background: "#fef2f2",
+          color: "#991b1b",
+          confirmButtonColor: "#dc2626",
+          confirmButtonText: "Try Again",
+        });
         // ..
       });
   };
