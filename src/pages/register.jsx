@@ -1,10 +1,11 @@
 import React, { use } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const Register = () => {
-  const { createUser, setUser } = use(AuthContext);
+  const { createUser, setUser, updateUser } = use(AuthContext);
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -31,19 +32,39 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        // console.log(user);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "🎉 Account Register Successfully",
-          color: "#065f46",
-          showConfirmButton: false,
-          timer: 1500,
-          customClass: {
-            popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
-          },
-        });
+        // console.log(result.user);
         setUser(user);
+
+        updateUser({ displayName: name, photoURL: photo })
+          .then(() => {
+            // Profile updated!
+            setUser(user);
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "🎉Register account Successfully and login",
+              color: "#065f46",
+              showConfirmButton: false,
+              timer: 1500,
+              customClass: {
+                popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
+              },
+            });
+            setTimeout(() => {
+              navigate("/");
+            }, 1000);
+          })
+          .catch((error) => {
+            Swal.fire({
+              toast: true,
+              position: "top-end",
+              icon: "error",
+              title: "Profile update failed!",
+              text: error.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
       })
       .catch((error) => {
         const errorCode = error.code;

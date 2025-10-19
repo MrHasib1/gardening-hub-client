@@ -1,5 +1,5 @@
 import React, { use } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import gardeningHub from "../assets/logo.jpg";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
@@ -100,7 +100,7 @@ const Navbar = () => {
           <>
             <div className="avatar">
               <div className="w-10 rounded-full">
-                <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+                <img src={`${user ? user.photoURL : null}`} />
               </div>
             </div>
             <button
@@ -112,9 +112,11 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <button className="btn btn-outline text-white font-bold btn-sm bg-green-400">
-              Login
-            </button>
+            <Link to={`/auth/login`}>
+              <button className="btn btn-outline text-white font-bold btn-sm bg-green-400">
+                Login
+              </button>
+            </Link>
           </>
         )}
       </div>

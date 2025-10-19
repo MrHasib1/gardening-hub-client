@@ -1,10 +1,11 @@
 import React, { use } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const { user, setUser, signIn } = use(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -29,6 +30,9 @@ const Login = () => {
           },
         });
         setUser(user);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -36,7 +40,7 @@ const Login = () => {
         // alert(errorMessage);
         Swal.fire({
           icon: "error",
-          title: "Registration Failed 😢",
+          title: "Login Failed 😢",
           text: errorMessage,
           background: "#fef2f2",
           color: "#991b1b",
