@@ -2,9 +2,10 @@ import React, { use } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-  const { user, setUser, signIn } = use(AuthContext);
+  const { setUser, signIn, googleSignIn } = use(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -48,6 +49,39 @@ const Login = () => {
           confirmButtonText: "Try Again",
         });
         // ..
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleSignIn()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Google Login Successfully",
+          color: "#065f46",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
+          },
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Google Login Failed 😢",
+          text: errorMessage,
+          background: "#fef2f2",
+          color: "#991b1b",
+          confirmButtonColor: "#dc2626",
+          confirmButtonText: "Try Again",
+        });
       });
   };
 
@@ -107,7 +141,7 @@ const Login = () => {
           </button>
 
           {/* Register Redirect */}
-          <p className="text-center mt-2 text-green-700">
+          <p className="text-center  text-green-700">
             Don’t have an account?{" "}
             <Link
               to="/auth/register"
@@ -117,6 +151,16 @@ const Login = () => {
             </Link>
           </p>
         </form>
+        <div className="text-center">
+          <h2 className=" text-xl font-bold">Or</h2>
+          <button
+            onClick={() => handleGoogleLogin()}
+            className="btn text-base w-10/12 bg-white text-black border-[#e5e5e5] mt-3 hover:bg-[#f43098] hover:text-white"
+          >
+            <FcGoogle></FcGoogle>
+            Login with Google
+          </button>
+        </div>
       </div>
     </div>
   );

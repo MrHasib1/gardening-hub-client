@@ -2,9 +2,10 @@ import React, { use } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
-  const { createUser, setUser, updateUser } = use(AuthContext);
+  const { createUser, setUser, updateUser, googleSignIn } = use(AuthContext);
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
@@ -80,6 +81,39 @@ const Register = () => {
           confirmButtonText: "Try Again",
         });
         // ..
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleSignIn()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Google Login Successfully",
+          color: "#065f46",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
+          },
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Google Login Failed 😢",
+          text: errorMessage,
+          background: "#fef2f2",
+          color: "#991b1b",
+          confirmButtonColor: "#dc2626",
+          confirmButtonText: "Try Again",
+        });
       });
   };
   return (
@@ -172,6 +206,16 @@ const Register = () => {
             </Link>
           </p>
         </form>
+        <div className="text-center">
+          <h2 className=" text-xl font-bold">Or</h2>
+          <button
+            onClick={() => handleGoogleLogin()}
+            className="btn text-base w-10/12 bg-white text-black border-[#e5e5e5] mt-3 hover:bg-[#f43098] hover:text-white"
+          >
+            <FcGoogle></FcGoogle>
+            Login with Google
+          </button>
+        </div>
       </div>
     </div>
   );
