@@ -14,7 +14,7 @@ const FlowerGarden = () => {
         </p>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
           {/* --- Big Feature Card 1 --- */}
           <div className="lg:col-span-2 bg-white shadow-md hover:shadow-lg transition rounded-xl overflow-hidden relative group">
             <img
