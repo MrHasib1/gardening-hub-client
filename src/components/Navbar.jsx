@@ -6,22 +6,91 @@ import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
-  const links = (
+  const links1 = (
     <>
       <li className="font-bold">
-        <NavLink to="/">Home</NavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "underline text-green-600 font-bold" : "hover:underline"
+          }
+        >
+          Home
+        </NavLink>
       </li>
       <li className="font-bold">
-        <NavLink to="/exploreGarden">Explore Gardeners</NavLink>
+        <NavLink
+          to="/exploreGarden"
+          className={({ isActive }) =>
+            isActive ? "underline text-green-600 font-bold" : "hover:underline"
+          }
+        >
+          Explore Gardeners
+        </NavLink>
       </li>
       <li className="font-bold">
-        <NavLink to="/browseTips">Browse Tips</NavLink>
+        <NavLink
+          to="/browseTips"
+          className={({ isActive }) =>
+            isActive ? "underline text-green-600 font-bold" : "hover:underline"
+          }
+        >
+          Browse Tips
+        </NavLink>
+      </li>
+    </>
+  );
+  const links2 = (
+    <>
+      <li className="font-bold">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "underline text-green-600 font-bold" : "hover:underline"
+          }
+        >
+          Home
+        </NavLink>
       </li>
       <li className="font-bold">
-        <NavLink to="/shareGardeners">Share a Garden Tip</NavLink>
+        <NavLink
+          to="/exploreGarden"
+          className={({ isActive }) =>
+            isActive ? "underline text-green-600 font-bold" : "hover:underline"
+          }
+        >
+          Explore Gardeners
+        </NavLink>
       </li>
       <li className="font-bold">
-        <NavLink to="/browseTips">My Tips</NavLink>
+        <NavLink
+          to="/browseTips"
+          className={({ isActive }) =>
+            isActive ? "underline text-green-600 font-bold" : "hover:underline"
+          }
+        >
+          Browse Tips
+        </NavLink>
+      </li>
+      <li className="font-bold">
+        <NavLink
+          to="/shareGardeners"
+          className={({ isActive }) =>
+            isActive ? "underline text-green-600 font-bold" : "hover:underline"
+          }
+        >
+          Share a Garden Tip
+        </NavLink>
+      </li>
+      <li className="font-bold">
+        <NavLink
+          to="/myTips"
+          className={({ isActive }) =>
+            isActive ? "underline text-green-600 font-bold" : "hover:underline"
+          }
+        >
+          My Tips
+        </NavLink>
       </li>
     </>
   );
@@ -79,7 +148,7 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow flex flex-col gap-3 text-black"
           >
-            {links}
+            {user ? links2 : links1}
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">
@@ -90,7 +159,7 @@ const Navbar = () => {
       {/* Center: Horizontal Menu for Large Screens */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 flex flex-row gap-5">
-          {links}
+          {user ? links2 : links1}
         </ul>
       </div>
 

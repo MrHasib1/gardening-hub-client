@@ -7,6 +7,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import register from "../pages/register";
 import Login from "../pages/Login";
 import exploreGardeners from "../pages/exploreGardeners";
+import BrowseTips from "../pages/BrowseTips";
+import TipsDetails from "../pages/TipsDetails";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/browseTips",
-        element: <h2>browse Tips LayOut</h2>,
+        loader: () => fetch("http://localhost:3000/browseTips"),
+        element: <BrowseTips />,
+      },
+      {
+        path: "tips-Details/:id",
+        loader: () => fetch("http://localhost:3000/browseTips"),
+        element: <TipsDetails />,
       },
       {
         path: "/shareGardeners",

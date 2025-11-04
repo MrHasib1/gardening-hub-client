@@ -1,0 +1,130 @@
+import React, { useEffect, useState } from "react";
+import { useLoaderData, useParams } from "react-router";
+import { FaLeaf, FaEnvelope, FaUser, FaLayerGroup } from "react-icons/fa";
+import { BiSolidLike } from "react-icons/bi";
+
+const TipsDetails = () => {
+  const tipsData = useLoaderData();
+  const { id } = useParams();
+  const [tip, setTip] = useState(null);
+  const [likeCount, setLikeCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    const foundTip = tipsData.find((tipData) => tipData._id === id);
+    setTip(foundTip);
+    if (foundTip) setLikeCount(foundTip.totalLiked || 0);
+  }, [tipsData, id]);
+
+  const handleLike = async () => {
+    if (!tip) return;
+    const newLikes = likeCount + 1;
+    setLikeCount(newLikes);
+    setIsLiked(true);
+
+    try {
+      await fetch(`http://localhost:3000/browseTips/${tip._id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ totalLiked: newLikes }),
+      });
+    } catch (err) {
+      console.error("Failed to update like count:", err);
+    }
+  };
+
+  if (!tip)
+    return (
+      <div className="min-h-screen flex justify-center items-center text-green-700">
+        Loading tip details... 🌿
+      </div>
+    );
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-200 py-10 px-5">
+      <div className="max-w-5xl mx-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-green-200 overflow-hidden">
+        {/* Header image */}
+        <div className="relative">
+          <img
+            src={tip.image}
+            alt={tip.title}
+            className="w-full h-80 object-cover rounded-t-2xl"
+          />
+        </div>
+
+        {/* Tip Details */}
+        <div className="p-6 space-y-3">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-green-100 rounded-xl p-2 border border-green-300 shadow-md">
+            <h1 className="text-3xl md:text-4xl font-bold text-green-800 text-center md:text-left leading-snug max-w-3xl">
+              {tip.title}
+            </h1>
+
+            {/* Like Box */}
+            <div className="flex flex-col items-center bg-white/80 backdrop-blur-sm px-3 py-3 rounded-2xl border border-green-300 shadow-md hover:shadow-lg transition-all duration-300">
+              <p className="text-sm font-medium text-green-700 mb-2">
+                Is this tip helpful?
+              </p>
+              <button
+                onClick={handleLike}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
+                  isLiked
+                    ? "bg-pink-100 text-pink-600 border border-pink-400"
+                    : "bg-green-600 text-white hover:bg-green-700"
+                }`}
+              >
+                <BiSolidLike className="text-xl" />
+                <span className="font-semibold">{likeCount}</span>
+              </button>
+            </div>
+          </div>
+
+          <p className="text-gray-700 text-lg leading-relaxed">
+            {tip.description}
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+            <p className="flex items-center gap-2">
+              <FaLayerGroup className="text-green-600" />
+              <span className="font-semibold">Category:</span> {tip.category}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaLeaf className="text-green-600" />
+              <span className="font-semibold">Level:</span>{" "}
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-medium ${
+                  tip.level === "easy"
+                    ? "bg-green-200 text-green-700"
+                    : tip.level === "medium"
+                    ? "bg-yellow-200 text-yellow-700"
+                    : "bg-red-200 text-red-700"
+                }`}
+              >
+                {tip.level}
+              </span>
+            </p>
+            <p className="flex items-center gap-2">
+              <FaUser className="text-green-600" />
+              <span className="font-semibold">Publisher:</span> {tip.name}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaEnvelope className="text-green-600" />
+              <span className="font-semibold">Email:</span> {tip.email}
+            </p>
+            <p>
+              <span className="font-semibold text-green-700">Topic:</span>{" "}
+              {tip.topic}
+            </p>
+            <p>
+              <span className="font-semibold text-green-700">
+                Availability:
+              </span>{" "}
+              {tip.availability}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TipsDetails;

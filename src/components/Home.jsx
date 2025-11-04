@@ -14,9 +14,7 @@ const Home = () => {
           🌿 Feature Gardeners 🌿
         </h1>
         <FeatureGardeners></FeatureGardeners>
-        <h1 className="text-3xl md:text-4xl font-bold text-center my-5 text-green-700">
-          🌿 Top Trending Tips 🌿
-        </h1>
+        
 
         <TrendingTips></TrendingTips>
 

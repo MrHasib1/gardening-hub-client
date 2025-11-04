@@ -1,15 +1,21 @@
 import React from "react";
-import { FaInfoCircle, FaLeaf, FaMapMarkerAlt, FaSeedling, FaUserAlt } from "react-icons/fa";
+import {
+  FaInfoCircle,
+  FaLeaf,
+  FaMapMarkerAlt,
+  FaSeedling,
+  FaUserAlt,
+} from "react-icons/fa";
 import { useLoaderData } from "react-router";
 
-const exploreGardeners = () => {
+const ExploreGardeners = () => {
   const gardeners = useLoaderData();
-  //   console.log(gardeners);
+
   return (
     <div className="mx-auto px-4 py-5 bg-gradient-to-b from-green-50 to-green-200">
       {/* 🌼 Header */}
       <div className="text-center mb-10">
-        <h2 className="text-4xl font-bold text-green-700 mb-3 flex justify-center items-center gap-2">
+        <h2 className="text-4xl font-bold text-green-700 mb-3 flex justify-center items-center gap-2 mt-2">
           <FaLeaf className="text-green-600" /> Explore Gardeners
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
@@ -23,14 +29,18 @@ const exploreGardeners = () => {
         {gardeners.map((gardener, index) => (
           <div
             key={index}
-            className="bg-white border border-green-100 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+            className="bg-white border border-green-100 rounded-xl shadow-md hover:shadow-xl 
+                       transition-all duration-300 transform hover:-translate-y-2 
+                       hover:bg-green-50 group"
           >
             {/* Gardener Image */}
-            <img
-              src={gardener.image}
-              alt={gardener.name}
-              className="h-60 w-full  rounded-t-xl"
-            />
+            <div className="overflow-hidden rounded-t-xl">
+              <img
+                src={gardener.image}
+                alt={gardener.name}
+                className="h-60 w-full  rounded-t-xl transition-transform duration-500 group-hover:scale-110"
+              />
+            </div>
 
             {/* Gardener Info */}
             <div className="p-5">
@@ -82,7 +92,7 @@ const exploreGardeners = () => {
                   🌱 <span className="font-medium">Shared Tips:</span>{" "}
                   {gardener.totalSharedTips}
                 </p>
-                <button className="flex items-center gap-1 text-green-700 text-sm font-medium hover:text-green-900 transition">
+                <button className="flex items-center gap-1 text-green-700 text-sm font-medium hover:text-green-900 transition cursor-pointer">
                   <FaInfoCircle /> View Profile
                 </button>
               </div>
@@ -94,4 +104,4 @@ const exploreGardeners = () => {
   );
 };
 
-export default exploreGardeners;
+export default ExploreGardeners;

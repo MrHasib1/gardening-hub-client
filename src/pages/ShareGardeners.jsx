@@ -1,12 +1,42 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const ShareGardeners = () => {
+  const { user } = use(AuthContext);
   const handleShareTips = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const newShareTips = Object.fromEntries(formData.entries());
     console.log(newShareTips);
+
+    // send data to the db
+    fetch("http://localhost:3000/shareTips", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newShareTips),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Share Garden Tips Successfully",
+            color: "#065f46",
+            showConfirmButton: false,
+            timer: 1500,
+            customClass: {
+              popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
+            },
+          });
+          form.reset();
+        }
+      });
   };
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-200 flex items-center justify-center p-6">
@@ -32,6 +62,7 @@ const ShareGardeners = () => {
                 name="title"
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
                 placeholder="Title of your garden tip"
+                required
               />
             </div>
 
@@ -44,6 +75,7 @@ const ShareGardeners = () => {
                 name="topic"
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
                 placeholder="e.g. Indoor Plants, Herbs"
+                required
               />
             </div>
           </div>
@@ -58,6 +90,7 @@ const ShareGardeners = () => {
                 defaultValue=""
                 name="level"
                 className="select select-bordered w-full focus:border-green-500 focus:ring-green-400"
+                required
               >
                 <option value="" disabled>
                   Choose difficulty
@@ -76,6 +109,7 @@ const ShareGardeners = () => {
                 defaultValue=""
                 name="category"
                 className="select select-bordered w-full focus:border-green-500 focus:ring-green-400"
+                required
               >
                 <option value="" disabled>
                   Choose category
@@ -97,6 +131,7 @@ const ShareGardeners = () => {
               className="textarea textarea-bordered w-full focus:border-green-500 focus:ring-green-400"
               rows="3"
               placeholder="Describe your tip..."
+              required
             ></textarea>
           </div>
 
@@ -111,6 +146,7 @@ const ShareGardeners = () => {
                 name="image"
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
                 placeholder="Enter image URL"
+                required
               />
             </div>
 
@@ -122,6 +158,7 @@ const ShareGardeners = () => {
                 defaultValue=""
                 name="availability"
                 className="select select-bordered w-full focus:border-green-500 focus:ring-green-400"
+                required
               >
                 <option value="" disabled>
                   Choose availability
@@ -142,7 +179,8 @@ const ShareGardeners = () => {
                 type="email"
                 name="email"
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
-                placeholder="Your email"
+                value={user ? user.email : ""}
+                readOnly
               />
             </div>
 
@@ -154,7 +192,8 @@ const ShareGardeners = () => {
                 type="text"
                 name="name"
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
-                placeholder="Your name"
+                readOnly
+                value={user ? user.displayName : ""}
               />
             </div>
           </div>
@@ -164,7 +203,7 @@ const ShareGardeners = () => {
             type="submit"
             className="btn w-full mt-6 bg-green-500 hover:bg-green-600 text-white border-none transition-all duration-200 shadow-md"
           >
-            🌼 Share Tip 🌼
+            ➕ Share Tip 🌼
           </button>
         </form>
       </div>
