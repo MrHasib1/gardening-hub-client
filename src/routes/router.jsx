@@ -9,6 +9,8 @@ import Login from "../pages/Login";
 import exploreGardeners from "../pages/exploreGardeners";
 import BrowseTips from "../pages/BrowseTips";
 import TipsDetails from "../pages/TipsDetails";
+import MyTips from "../pages/MyTips";
+import UpdateTip from "../pages/UpdateTip";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,15 @@ const router = createBrowserRouter([
       {
         path: "/shareGardeners",
         Component: ShareGardeners,
+      },
+      {
+        path: "/myTips",
+        loader: () => fetch("http://localhost:3000/allTipsData"),
+        element: <MyTips />,
+      },
+      {
+        path: "/updateTip/:id",
+        element: <UpdateTip />,
       },
     ],
   },
