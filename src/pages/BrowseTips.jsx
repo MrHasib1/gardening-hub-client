@@ -58,39 +58,40 @@ const BrowseTips = () => {
       </div>
 
       {/* 🌿 Table Section */}
-      <div className="overflow-x-auto bg-white rounded-xl shadow-lg border border-green-200">
-        <table className="table w-full">
+      <div className="w-full overflow-x-auto bg-white rounded-xl shadow-lg border border-green-200">
+        <table className="min-w-full table-auto">
           {/* Table Header */}
-          <thead className="bg-cyan-300 text-green-800">
+          <thead className="bg-cyan-300 text-green-800 text-sm sm:text-base">
             <tr>
-              <th>#</th>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Level</th>
-              <th>Action</th>
+              <th className="p-3 text-left">#</th>
+              <th className="p-3 text-left">Image</th>
+              <th className="p-3 text-left">Title</th>
+              <th className="p-3 text-left hidden sm:table-cell">Category</th>
+              <th className="p-3 text-left hidden sm:table-cell">Level</th>
+              <th className="p-3 text-left">Action</th>
             </tr>
           </thead>
 
           {/* Table Body */}
-          <tbody className="bg-pink-100">
+          <tbody className="bg-pink-100 text-sm sm:text-base">
             {tips.length > 0 ? (
               tips.map((tip, index) => (
                 <tr
                   key={tip._id}
-                  className="hover:bg-gray-200 transition-all duration-200"
+                  className="hover:bg-gray-100 transition-all duration-200 border-b"
                 >
-                  <td className="font-medium">{index + 1}</td>
+                  {/* Index */}
+                  <td className="p-3 font-medium">{index + 1}</td>
 
                   {/* Image */}
-                  <td>
+                  <td className="p-3">
                     <div className="flex items-center gap-3">
                       <div className="avatar">
-                        <div className="mask rounded-2xl h218 w-28">
+                        <div className="mask rounded-lg h-16 w-20 overflow-hidden">
                           <img
                             src={tip.image}
                             alt={tip.title}
-                            className="hover:scale-110 transition-transform duration-500"
+                            className="object-cover hover:scale-110 transition-transform duration-500"
                           />
                         </div>
                       </div>
@@ -98,13 +99,17 @@ const BrowseTips = () => {
                   </td>
 
                   {/* Title */}
-                  <td className="font-semibold text-green-800">{tip.title}</td>
+                  <td className="p-3 font-semibold text-green-800">
+                    {tip.title}
+                  </td>
 
-                  {/* Category */}
-                  <td className="capitalize text-gray-700">{tip.category}</td>
+                  {/* Category (Hidden on very small screens) */}
+                  <td className="p-3 capitalize text-gray-700 hidden sm:table-cell">
+                    {tip.category}
+                  </td>
 
-                  {/* Level */}
-                  <td>
+                  {/* Level (Hidden on very small screens) */}
+                  <td className="p-3 hidden sm:table-cell">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         tip.level === "easy"
@@ -119,10 +124,10 @@ const BrowseTips = () => {
                   </td>
 
                   {/* Action Button */}
-                  <td>
+                  <td className="p-3">
                     <button
                       onClick={() => navigate(`/tips-Details/${tip._id}`)}
-                      className="btn btn-sm bg-green-600 hover:bg-green-700 text-white flex items-center gap-1"
+                      className="btn btn-xs sm:btn-sm bg-green-600 hover:bg-green-700 text-white flex items-center gap-1"
                     >
                       <FaEye className="text-base" /> Details
                     </button>

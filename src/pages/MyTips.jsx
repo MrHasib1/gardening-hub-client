@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { useLoaderData, useNavigate } from "react-router";
 import { MdDelete, MdEmail } from "react-icons/md";
@@ -12,9 +12,10 @@ const MyTips = () => {
 
   const userEmail = user?.email;
   const userData = allData.filter((data) => data.email === userEmail);
-  console.log(userData);
 
-  // Placeholder delete handler
+  const [tipsData, setTipsData] = useState(userData);
+  console.log(tipsData);
+
   const handleDelete = (_id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -25,7 +26,7 @@ const MyTips = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      console.log(_id, result.isConfirmed);
+      // console.log(_id, result.isConfirmed);
       if (result.isConfirmed) {
         //start delete in the db
         fetch(`http://localhost:3000/allTipsData/${_id}`, { method: "DELETE" })
@@ -38,9 +39,12 @@ const MyTips = () => {
                 text: "Your Tips has been deleted.",
                 icon: "success",
               });
+
+              // remove the tips from the state
+              const remainingTips = tipsData.filter((tip) => tip._id !== _id);
+              setTipsData(remainingTips);
             }
           });
-        
       }
     });
   };
@@ -69,14 +73,14 @@ const MyTips = () => {
         <div className="text-right mt-4 md:mt-0">
           <h3 className="text-xl font-semibold text-green-700">
             My Total Tips:{" "}
-            <span className="text-green-600">{userData.length}</span>
+            <span className="text-green-600">{tipsData.length}</span>
           </h3>
         </div>
       </div>
 
       {/* My Tips Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {userData.map((tip) => (
+        {tipsData.map((tip) => (
           <div
             key={tip._id}
             className="card bg-white shadow-lg border border-green-200 hover:shadow-2xl transition-all"

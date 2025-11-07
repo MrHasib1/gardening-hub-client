@@ -1,5 +1,5 @@
 import React, { use } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 const Register = () => {
   const { createUser, setUser, updateUser, googleSignIn } = use(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -52,7 +53,7 @@ const Register = () => {
               },
             });
             setTimeout(() => {
-              navigate("/");
+              navigate(`${location.state ? location.state : "/"}`);
             }, 1000);
           })
           .catch((error) => {
@@ -101,7 +102,7 @@ const Register = () => {
           },
         });
         setTimeout(() => {
-          navigate("/");
+          navigate(`${location.state ? location.state : "/"}`);
         }, 1000);
       })
       .catch((error) => {

@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import HomeLayout from "../layouts/HomeLayout";
 import Home from "../components/Home";
 import ShareGardeners from "../pages/ShareGardeners";
-import error from "../pages/error";
 import AuthLayout from "../layouts/AuthLayout";
 import register from "../pages/register";
 import Login from "../pages/Login";
@@ -11,10 +10,14 @@ import BrowseTips from "../pages/BrowseTips";
 import TipsDetails from "../pages/TipsDetails";
 import MyTips from "../pages/MyTips";
 import UpdateTip from "../pages/UpdateTip";
+import PrivateRoute from "../provider/PrivateRoute";
+import Loading from "../components/Loading";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <ErrorPage></ErrorPage>,
     Component: HomeLayout,
     children: [
       {
@@ -28,27 +31,36 @@ const router = createBrowserRouter([
         loader: () => fetch("http://localhost:3000/exploreGardeners"),
         Component: exploreGardeners,
       },
+
       {
         path: "/browseTips",
         loader: () => fetch("http://localhost:3000/browseTips"),
         element: <BrowseTips />,
       },
       {
-        path: "tips-Details/:id",
-        loader: () => fetch("http://localhost:3000/browseTips"),
-        element: <TipsDetails />,
-      },
-      {
         path: "/shareGardeners",
-        Component: ShareGardeners,
+        errorElement: <ErrorPage></ErrorPage>,
+        element: (
+          <PrivateRoute>
+            <ShareGardeners />
+          </PrivateRoute>
+        ),
       },
+
       {
         path: "/myTips",
+        errorElement: <ErrorPage></ErrorPage>,
         loader: () => fetch("http://localhost:3000/allTipsData"),
-        element: <MyTips />,
+        element: (
+          <PrivateRoute>
+            <MyTips />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/updateTip/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/allTipsData/${params.id}`),
         element: <UpdateTip />,
       },
     ],
@@ -60,10 +72,12 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        hydrateFallbackElement: <Loading></Loading>,
         path: "login",
         Component: Login,
       },
       {
+        hydrateFallbackElement: <Loading></Loading>,
         path: "register",
         Component: register,
       },
@@ -71,8 +85,14 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/*",
-    Component: error,
+    path: "tips-Details/:id",
+    errorElement: <ErrorPage></ErrorPage>,
+    loader: () => fetch("http://localhost:3000/browseTips"),
+    element: (
+      <PrivateRoute>
+        <TipsDetails />,
+      </PrivateRoute>
+    ),
   },
 ]);
 

@@ -1,12 +1,58 @@
 import React from "react";
 import { GrUpdate } from "react-icons/gr";
-import { useParams } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const UpdateTip = () => {
-  const id = useParams();
-//   console.log(id);
+  const navigate = useNavigate();
+  const data = useLoaderData();
+  const {
+    _id,
+    availability,
+    category,
+    description,
+    email,
+    image,
+    level,
+    name,
+    title,
+    topic,
+  } = data[0];
+
   const handleUpdateTip = (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const updateTip = Object.fromEntries(formData.entries());
+    console.log(updateTip);
+
+    //update tips in db
+    fetch(`http://localhost:3000/allTipsData/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateTip),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your tips have been successfully updated",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+
+          //   navigate
+          setTimeout(() => {
+            navigate("/myTips");
+          }, 1000);
+        }
+      });
   };
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-200 flex items-center justify-center p-6">
@@ -27,6 +73,7 @@ const UpdateTip = () => {
               <input
                 type="text"
                 name="title"
+                defaultValue={title}
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
                 placeholder="Title of your garden tip"
                 required
@@ -40,6 +87,7 @@ const UpdateTip = () => {
               <input
                 type="text"
                 name="topic"
+                defaultValue={topic}
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
                 placeholder="e.g. Indoor Plants, Herbs"
                 required
@@ -54,8 +102,8 @@ const UpdateTip = () => {
                 Difficulty Level
               </label>
               <select
-                defaultValue=""
                 name="level"
+                defaultValue={level}
                 className="select select-bordered w-full focus:border-green-500 focus:ring-green-400"
                 required
               >
@@ -73,8 +121,8 @@ const UpdateTip = () => {
                 Category
               </label>
               <select
-                defaultValue=""
                 name="category"
+                defaultValue={category}
                 className="select select-bordered w-full focus:border-green-500 focus:ring-green-400"
                 required
               >
@@ -95,6 +143,7 @@ const UpdateTip = () => {
             </label>
             <textarea
               name="description"
+              defaultValue={description}
               className="textarea textarea-bordered w-full focus:border-green-500 focus:ring-green-400"
               rows="3"
               placeholder="Describe your tip..."
@@ -111,6 +160,7 @@ const UpdateTip = () => {
               <input
                 type="text"
                 name="image"
+                defaultValue={image}
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
                 placeholder="Enter image URL"
                 required
@@ -122,8 +172,8 @@ const UpdateTip = () => {
                 Availability
               </label>
               <select
-                defaultValue=""
                 name="availability"
+                defaultValue={availability}
                 className="select select-bordered w-full focus:border-green-500 focus:ring-green-400"
                 required
               >
@@ -146,7 +196,7 @@ const UpdateTip = () => {
                 type="email"
                 name="email"
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
-                // value={user ? user.email : ""}
+                defaultValue={email}
                 readOnly
               />
             </div>
@@ -160,7 +210,7 @@ const UpdateTip = () => {
                 name="name"
                 className="input input-bordered w-full focus:border-green-500 focus:ring-green-400"
                 readOnly
-                // value={user ? user.displayName : ""}
+                defaultValue={name}
               />
             </div>
           </div>

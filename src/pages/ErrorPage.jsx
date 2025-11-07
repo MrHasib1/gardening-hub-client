@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import ErrorImg from "../assets/error_404.gif";
 
-const ErrorPage = () => {
+const ErrorPage = ({ message }) => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-green-50 to-green-200 text-green-800 p-6">
       {/* Error Image */}
@@ -13,12 +13,12 @@ const ErrorPage = () => {
       />
 
       {/* Message */}
-      <h1 className="text-4xl sm:text-5xl font-extrabold text-green-700 mb-4">
+      <h1 className="text-3xl sm:text-5xl font-extrabold text-green-700 mb-4">
         🌿 Page Not Found 🌿
       </h1>
       <p className="text-center text-lg sm:text-xl text-green-600 max-w-lg mb-8">
-        Sorry, the page you’re looking for doesn’t exist or may have been moved.
-        Let’s get you back to your garden home!
+        {message ||
+          "Sorry, the page you’re looking for doesn’t exist or may have been moved.Let’s get you back to your garden home!"}
       </p>
 
       {/* Back Home Button */}
@@ -27,7 +27,6 @@ const ErrorPage = () => {
           🌱 Go Back Home 🌱
         </button>
       </Link>
-       
     </div>
   );
 };
