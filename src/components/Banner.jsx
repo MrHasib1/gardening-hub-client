@@ -3,30 +3,31 @@ import slide1 from "../assets/slide1.avif";
 import slide2 from "../assets/slide2.jpg";
 import slide3 from "../assets/slide3.jpg";
 import slide4 from "../assets/slidee4.jpg";
+import { Typewriter } from "react-simple-typewriter";
 
 const slides = [
   {
     img: slide1,
     title: "Welcome to GardeningHub 🌱",
-    desc: "Discover the joy of gardening — from growing your own plants to sharing them with the world.",
+    desc: "Discover the true joy of gardening — where every leaf tells a story, every seed brings hope, and every moment spent nurturing plants connects you to nature in the most beautiful way.",
     btn: "Explore Now",
   },
   {
     img: slide2,
     title: "Grow Together ",
-    desc: "Join a vibrant community of nature lovers and plant enthusiasts.",
+    desc: "Become part of a warm, supportive community of plant lovers who share tips, experiences, and inspiration to help you grow your garden — and your passion — with confidence and joy.",
     btn: "Join Community",
   },
   {
     img: slide3,
     title: "Plant. Care. Share. 🌸",
-    desc: "Every seed you plant is a step towards a greener tomorrow.",
+    desc: "Every seed you plant is a promise to the future — a small act that brings beauty, life, and positivity. Care for your plants, share your journey, and inspire others to create their own green space.",
     btn: "Get Started",
   },
   {
     img: slide4,
     title: "Your Garden, Your Story 🌻",
-    desc: "Showcase your green space and inspire others to grow with you.",
+    desc: "Your garden reflects your passion, creativity, and love for nature. Capture its beauty, share your story with others, and inspire a world where everyone grows a little greener every day.",
     btn: "Share Now",
   },
 ];
@@ -54,7 +55,17 @@ const Banner = () => {
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-green-700">
               {slide.title}
             </h2>
-            <p className="text-green-600 text-base md:text-lg">{slide.desc}</p>
+            <p className="text-green-600 text-base md:text-lg">
+              <Typewriter
+                words={[slide.desc]}
+                loop={false}
+                cursor
+                cursorStyle="|"
+                typeSpeed={60}
+                deleteSpeed={20}
+                delaySpeed={2000}
+              ></Typewriter>
+            </p>
             <button className="btn bg-green-500 hover:bg-green-600 text-white border-none shadow-md mt-2">
               {slide.btn}
             </button>

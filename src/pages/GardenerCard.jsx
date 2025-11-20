@@ -26,13 +26,13 @@ const GardenerCard = ({ Gardener }) => {
           {status === "active" && <MdVerified className="text-green-500" />}
         </h2>
 
-        <p className="flex items-center text-gray-700 text-sm gap-2 mt-2">
+        <p className="flex items-center   text-sm gap-2 mt-2">
           <FaMapMarkerAlt className="text-red-500" /> {location}
         </p>
 
-        <p className="flex items-center text-gray-700 text-sm gap-2">
-          <FaLeaf className="text-green-600" /> Specialty:{" "}
-          <span className="font-medium">{specialty}</span>
+        <p className="flex items-center   text-sm gap-2">
+          <FaLeaf className="text-green-600" /> <span className="font-bold">Specialty:</span>{" "}
+          <span className="font-medium text-green-500">{specialty}</span>
         </p>
 
         <div className="flex items-center gap-2 mt-3">

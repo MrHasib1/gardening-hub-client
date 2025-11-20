@@ -12,6 +12,8 @@ const ErrorPage = ({ message }) => {
         alt="Error 404"
       />
 
+      
+
       {/* Message */}
       <h1 className="text-3xl sm:text-5xl font-extrabold text-green-700 mb-4">
         🌿 Page Not Found 🌿

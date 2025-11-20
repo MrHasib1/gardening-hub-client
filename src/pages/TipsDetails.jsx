@@ -50,7 +50,7 @@ const TipsDetails = () => {
       </header>
 
       <main>
-        <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-200 py-10 px-5">
+        <div className="min-h-screen bg-gradient-to-b from-green-50  to-green-200 py-10 px-5">
           <div className="max-w-5xl mx-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-green-200 overflow-hidden">
             {/* Header image */}
             <div className="relative">

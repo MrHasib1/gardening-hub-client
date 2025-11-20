@@ -50,7 +50,7 @@ const MyTips = () => {
   };
 
   return (
-    <div className="min-h-screen bg-green-50 py-5 px-5">
+    <div className="min-h-screen  py-5 px-5">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-5 bg-gray-100 shadow-md p-5 rounded-lg border border-green-200">
         <div className="flex items-center gap-5">
@@ -106,15 +106,18 @@ const MyTips = () => {
                   <span className="text-black">Availability:</span>{" "}
                   {tip.availability}
                 </p>
-                <p className="font-bold">
+                <p className="font-bold text-black">
                   Level: <span className="text-green-600 ">{tip.level}</span>{" "}
                 </p>
               </div>
               <div className="flex justify-between items-center ">
                 <p className="font-bold">
-                  Topic: <span className="text-green-500">{tip.topic}</span>
+                  <span className="text-black">Topic:</span>{" "}
+                  <span className="text-green-500">{tip.topic}</span>
                 </p>
-                <p className="text-sm font-bold">👍 {tip.totalLiked || 0}</p>
+                <p className="text-sm font-bold">
+                  👍<span className="text-black"> {tip.totalLiked || 0}</span>
+                </p>
               </div>
 
               {/* Buttons */}

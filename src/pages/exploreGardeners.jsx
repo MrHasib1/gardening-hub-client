@@ -13,7 +13,7 @@ const ExploreGardeners = () => {
 
   return (
     <div className="mx-auto px-4 py-5 bg-gradient-to-b from-green-50 to-green-200">
-      {/* 🌼 Header */}
+      {/* Header */}
       <div className="text-center mb-10">
         <h2 className="text-4xl font-bold text-green-700 mb-3 flex justify-center items-center gap-2 mt-2">
           <FaLeaf className="text-green-600" /> Explore Gardeners
@@ -24,7 +24,6 @@ const ExploreGardeners = () => {
         </p>
       </div>
 
-      {/* 🌻 Gardeners Grid */}
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {gardeners.map((gardener, index) => (
           <div

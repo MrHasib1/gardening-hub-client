@@ -58,7 +58,7 @@ const BrowseTips = () => {
       </div>
 
       {/* 🌿 Table Section */}
-      <div className="w-full overflow-x-auto bg-white rounded-xl shadow-lg border border-green-200">
+      <div className="w-full overflow-x-auto  rounded-xl shadow-lg border border-green-200">
         <table className="min-w-full table-auto">
           {/* Table Header */}
           <thead className="bg-cyan-300 text-green-800 text-sm sm:text-base">

@@ -33,9 +33,7 @@ const TrendingTips = () => {
 
       {/* total Likes Display */}
       <div className="flex justify-center items-center gap-3 mb-8">
-        <h2 className="text-2xl ">
-          Total Likes from All Users:
-        </h2>
+        <h2 className="text-2xl text-green-400">Total Likes from All Users:</h2>
         <div className="flex items-center gap-2 text-gray-600 text-2xl font-bold">
           <BiSolidLike className="text-3xl" />
           <span className="text-black"> {totalLikes}</span>
@@ -58,15 +56,16 @@ const TrendingTips = () => {
             </figure>
             <div className="card-body">
               <h2 className="card-title text-green-700">{tip.title}</h2>
-              <p className="text-gray-600 text-sm">
-                <span className="text-black font-bold">Category:</span>{" "}
-                {tip.category}
+              <p className="  text-sm">
+                <span className=" font-bold">Category:</span> {tip.category}
               </p>
-              <p className="text-gray-700 text-sm">{tip.description}</p>
+              <p className="  text-sm">{tip.description}</p>
               <div className="flex justify-between items-center mt-3">
-                <p className="text-green-600 font-medium">
-                  <span className="text-black font-bold">Level:</span>{" "}
-                  {tip.difficulty || tip.level}
+                <p>
+                  <span className=" font-bold">Level:</span>{" "}
+                  <span className="text-green-600 font-medium">
+                    {tip.difficulty || tip.level}
+                  </span>
                 </p>
                 <p className="text-green-600 font-medium">
                   ❤️ {tip.totalLiked}

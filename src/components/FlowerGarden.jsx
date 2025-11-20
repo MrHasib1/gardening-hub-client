@@ -1,8 +1,25 @@
 import React from "react";
 
 const FlowerGarden = () => {
+  const flowerData = [
+    {
+      img: "https://i.ibb.co.com/CppwhfDH/lavendy.jpg",
+      title: "Lavender Serenity",
+      desc: "Calm your soul with lavender’s soothing fragrance and beauty.",
+    },
+    {
+      img: "https://i.ibb.co.com/SDmVcRtb/daisy.jpg",
+      title: "Daisy Delight",
+      desc: "Fill your home with cheerful daisies — symbols of freshness.",
+    },
+    {
+      img: "https://i.ibb.co.com/d4Z18mjb/orchid1.jpg",
+      title: "Orchid Elegance",
+      desc: "Add luxury to your rooms with graceful and exotic orchids.",
+    },
+  ];
   return (
-    <section className="bg-green-50 py-12 px-6">
+    <section className="py-5 px-6">
       <div className="max-w-7xl mx-auto text-center">
         {/* Section Title */}
         <h2 className="text-4xl font-bold text-green-700 mb-3">
@@ -48,23 +65,7 @@ const FlowerGarden = () => {
           </div>
 
           {/* --- Small Cards --- */}
-          {[
-            {
-              img: "https://i.ibb.co.com/CppwhfDH/lavendy.jpg",
-              title: "Lavender Serenity",
-              desc: "Calm your soul with lavender’s soothing fragrance and beauty.",
-            },
-            {
-              img: "https://i.ibb.co.com/SDmVcRtb/daisy.jpg",
-              title: "Daisy Delight",
-              desc: "Fill your home with cheerful daisies — symbols of freshness.",
-            },
-            {
-              img: "https://i.ibb.co.com/d4Z18mjb/orchid1.jpg",
-              title: "Orchid Elegance",
-              desc: "Add luxury to your rooms with graceful and exotic orchids.",
-            },
-          ].map((flower, index) => (
+          {flowerData.map((flower, index) => (
             <div
               key={index}
               className="card bg-white shadow-md hover:shadow-lg transition rounded-xl overflow-hidden"
