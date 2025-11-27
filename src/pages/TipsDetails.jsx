@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, useLoaderData, useParams } from "react-router";
 import { FaLeaf, FaEnvelope, FaUser, FaLayerGroup } from "react-icons/fa";
 import { BiSolidLike } from "react-icons/bi";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const TipsDetails = () => {
+  const { user } = use(AuthContext);
   const tipsData = useLoaderData();
   const { id } = useParams();
   const [tip, setTip] = useState(null);
   const [likeCount, setLikeCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
+
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const foundTip = tipsData.find((tipData) => tipData._id === id);
@@ -35,6 +40,52 @@ const TipsDetails = () => {
       console.error("Failed to update like count:", err);
     }
   };
+
+  const handleComment = (e) => {
+    e.preventDefault();
+    const comment = e.target.comment.value;
+    const name = user.displayName;
+    const photo = user.photoURL;
+
+    const newComment = { name, photo, comment, id };
+    const form = e.target;
+    console.log(newComment);
+
+    fetch("http://localhost:3000/comment", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newComment),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.insertedId) {
+          setComments((prev) => [...prev, newComment]);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Share comment Successfully",
+            color: "#065f46",
+            showConfirmButton: false,
+            timer: 1500,
+            customClass: {
+              popup: "mt-6 rounded-2xl shadow-lg border border-green-200",
+            },
+          });
+          form.reset();
+        }
+      });
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:3000/getComment")
+      .then((res) => res.json())
+      .then((data) => {
+        setComments(data);
+      });
+  }, []);
 
   if (!tip)
     return (
@@ -139,6 +190,65 @@ const TipsDetails = () => {
                   </button>
                 </Link>
               </div>
+            </div>
+          </div>
+
+          <form
+            onSubmit={handleComment}
+            className="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-6 border border-green-300 space-y-4 mt-5"
+          >
+            <h2 className="text-2xl font-semibold text-green-700 text-center">
+              Comment
+            </h2>
+
+            <input
+              name="comment"
+              placeholder="Write your comment here..."
+              className="input-ghost w-full h-10 border-2 rounded-xl border-b-2 border-dashed p-3 border-b-black focus:outline-none focus:ring-2 focus:ring-green-400"
+            ></input>
+
+            <input
+              type="submit"
+              value="Submit"
+              className="w-full btn bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-xl transition-all duration-300 cursor-pointer"
+            />
+          </form>
+
+          <div className=" bg-gray-200 py-3 px-5 mt-5">
+            <div className="max-w-2xl mx-auto mt-10 space-y-4">
+              {/* Section Title */}
+              <h2 className="text-3xl font-bold text-green-800 mb-4 text-center">
+                User Comments 🌿
+              </h2>
+
+              {/* Show "No Comments" message OR comment list */}
+              {comments.filter((c) => c.id === id).length === 0 ? (
+                <p className="text-gray-600 text-center bg-white p-4 rounded-xl shadow-md border border-green-200">
+                  No comments yet. Be the first to comment! 🌱
+                </p>
+              ) : (
+                comments
+                  .filter((c) => c.id === id)
+                  .map((comment) => (
+                    <div
+                      key={comment._id}
+                      className="bg-gradient-to-r from-green-200 via-teal-200 to-green-100 p-4 rounded-xl shadow-md border border-green-300 flex gap-4 hover:shadow-xl transition-all duration-300"
+                    >
+                      <img
+                        src={comment.photo}
+                        alt="User"
+                        className="w-12 h-12 rounded-full border border-green-300 object-cover shadow-sm"
+                      />
+
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-green-800 text-lg">
+                          {comment.name}
+                        </h3>
+                        <p className="text-gray-700 mt-1">{comment.comment}</p>
+                      </div>
+                    </div>
+                  ))
+              )}
             </div>
           </div>
         </div>

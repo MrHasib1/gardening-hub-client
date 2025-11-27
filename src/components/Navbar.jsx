@@ -201,6 +201,7 @@ const Navbar = () => {
                 <img
                   src={user.photoURL}
                   alt="User"
+                  referrerPolicy="no-referrer"
                   data-tooltip-id="user-tooltip"
                   data-tooltip-content={user.displayName || "User"}
                 />
