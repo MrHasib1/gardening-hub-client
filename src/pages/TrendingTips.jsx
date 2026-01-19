@@ -4,26 +4,47 @@ import { BiSolidLike } from "react-icons/bi";
 const TrendingTips = () => {
   const [trendingTips, setTrendingTips] = useState([]);
   const [totalLikes, setTotalLikes] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  //Fetch trending tips
+  // Fetch trending tips
   useEffect(() => {
-    fetch("http://localhost:3000/trendingTips")
+    fetch("https://gardening-hub-server-chi.vercel.app/trendingTips")
       .then((res) => res.json())
-      .then((data) => setTrendingTips(data))
+      .then((data) => {
+        setTrendingTips(data);
+      })
       .catch((err) => console.error("Error fetching trending tips:", err));
   }, []);
 
-  //Fetch total likes from browseTips
+  // Fetch total likes from browseTips
   useEffect(() => {
-    fetch("http://localhost:3000/browseTips")
+    fetch("https://gardening-hub-server-chi.vercel.app/browseTips")
       .then((res) => res.json())
       .then((data) => {
-        //
         const total = data.reduce((sum, tip) => sum + (tip.totalLiked || 0), 0);
         setTotalLikes(total);
       })
       .catch((err) => console.error("Error fetching total likes:", err));
   }, []);
+
+  // Loading control (both data ready)
+  useEffect(() => {
+    if (Array.isArray(trendingTips) && typeof totalLikes === "number") {
+      setLoading(false);
+    }
+  }, [trendingTips, totalLikes]);
+
+  // 🌿 Loading UI
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4 bg-gradient-to-b from-green-50 to-green-100">
+        <span className="loading loading-spinner loading-lg text-green-600"></span>
+        <p className="text-green-700 font-semibold text-lg animate-pulse">
+          Loading Trending Tips...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="my-10">
@@ -31,12 +52,12 @@ const TrendingTips = () => {
         🌿 Top Trending Tips 🌿
       </h1>
 
-      {/* total Likes Display */}
+      {/* Total Likes */}
       <div className="flex justify-center items-center gap-3 mb-8">
-        <h2 className="text-2xl text-green-400">Total Likes from All Users:</h2>
+        <h2 className="text-xl text-green-400">Total Likes from All Users:</h2>
         <div className="flex items-center gap-2 text-gray-600 text-2xl font-bold">
           <BiSolidLike className="text-3xl" />
-          <span className="text-black"> {totalLikes}</span>
+          <span className="text-black">{totalLikes}</span>
         </div>
       </div>
 
@@ -54,15 +75,19 @@ const TrendingTips = () => {
                 className="h-48 w-full object-cover"
               />
             </figure>
+
             <div className="card-body">
               <h2 className="card-title text-green-700">{tip.title}</h2>
-              <p className="  text-sm">
-                <span className=" font-bold">Category:</span> {tip.category}
+
+              <p className="text-sm">
+                <span className="font-bold">Category:</span> {tip.category}
               </p>
-              <p className="  text-sm">{tip.description}</p>
+
+              <p className="text-sm">{tip.description}</p>
+
               <div className="flex justify-between items-center mt-3">
                 <p>
-                  <span className=" font-bold">Level:</span>{" "}
+                  <span className="font-bold">Level:</span>{" "}
                   <span className="text-green-600 font-medium">
                     {tip.difficulty || tip.level}
                   </span>

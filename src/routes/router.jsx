@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import HomeLayout from "../layouts/HomeLayout";
 import Home from "../components/Home";
 import ShareGardeners from "../pages/ShareGardeners";
-import AuthLayout from "../layouts/AuthLayout";
 import register from "../pages/register";
 import Login from "../pages/Login";
 import exploreGardeners from "../pages/exploreGardeners";
@@ -19,27 +18,32 @@ const router = createBrowserRouter([
     path: "/",
     errorElement: <ErrorPage></ErrorPage>,
     Component: HomeLayout,
+    hydrateFallbackElement: <Loading></Loading>,
     children: [
       {
         index: true,
         path: "/",
-        loader: () => fetch("http://localhost:3000/featureGarden"),
+        loader: () =>
+          fetch("https://gardening-hub-server-chi.vercel.app/featureGarden"),
         Component: Home,
       },
       {
         path: "/exploreGarden",
-        loader: () => fetch("http://localhost:3000/exploreGardeners"),
+        loader: () =>
+          fetch("https://gardening-hub-server-chi.vercel.app/exploreGardeners"),
         Component: exploreGardeners,
       },
 
       {
         path: "/browseTips",
-        loader: () => fetch("http://localhost:3000/browseTips"),
+        loader: () =>
+          fetch("https://gardening-hub-server-chi.vercel.app/browseTips"),
         element: <BrowseTips />,
       },
       {
         path: "/shareGardeners",
         errorElement: <ErrorPage></ErrorPage>,
+        hydrateFallbackElement: <Loading></Loading>,
         element: (
           <PrivateRoute>
             <ShareGardeners />
@@ -50,7 +54,8 @@ const router = createBrowserRouter([
       {
         path: "/myTips",
         errorElement: <ErrorPage></ErrorPage>,
-        loader: () => fetch("http://localhost:3000/allTipsData"),
+        loader: () =>
+          fetch("https://gardening-hub-server-chi.vercel.app/allTipsData"),
         element: (
           <PrivateRoute>
             <MyTips />
@@ -60,7 +65,9 @@ const router = createBrowserRouter([
       {
         path: "/updateTip/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/allTipsData/${params.id}`),
+          fetch(
+            `https://gardening-hub-server-chi.vercel.app/allTipsData/${params.id}`
+          ),
         element: <UpdateTip />,
       },
     ],
@@ -68,7 +75,7 @@ const router = createBrowserRouter([
 
   {
     path: "/auth",
-    element: <AuthLayout></AuthLayout>,
+    element: <HomeLayout></HomeLayout>,
     children: [
       {
         index: true,
@@ -87,7 +94,8 @@ const router = createBrowserRouter([
   {
     path: "tips-Details/:id",
     errorElement: <ErrorPage></ErrorPage>,
-    loader: () => fetch("http://localhost:3000/browseTips"),
+    loader: () =>
+      fetch("https://gardening-hub-server-chi.vercel.app/browseTips"),
     element: (
       <PrivateRoute>
         <TipsDetails />,

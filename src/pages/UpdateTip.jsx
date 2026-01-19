@@ -28,7 +28,7 @@ const UpdateTip = () => {
     console.log(updateTip);
 
     //update tips in db
-    fetch(`http://localhost:3000/allTipsData/${_id}`, {
+    fetch(`https://gardening-hub-server-chi.vercel.app/allTipsData/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

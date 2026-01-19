@@ -50,7 +50,7 @@ const Navbar = () => {
       });
   };
 
-  // FIXED: logout button MUST return JSX
+  //  logout button  
   const showingLogout = () => (
     <button
       onClick={handleLogout}

@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const TipsDetails = () => {
   const { user } = use(AuthContext);
@@ -31,11 +32,14 @@ const TipsDetails = () => {
     setIsLiked(true);
 
     try {
-      await fetch(`http://localhost:3000/browseTips/${tip._id}`, {
-        method: "PATCH",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ totalLiked: newLikes }),
-      });
+      await fetch(
+        `https://gardening-hub-server-chi.vercel.app/browseTips/${tip._id}`,
+        {
+          method: "PATCH",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ totalLiked: newLikes }),
+        }
+      );
     } catch (err) {
       console.error("Failed to update like count:", err);
     }
@@ -49,9 +53,9 @@ const TipsDetails = () => {
 
     const newComment = { name, photo, comment, id };
     const form = e.target;
-    console.log(newComment);
+    // console.log(newComment);
 
-    fetch("http://localhost:3000/comment", {
+    fetch("https://gardening-hub-server-chi.vercel.app/comment", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -80,7 +84,7 @@ const TipsDetails = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3000/getComment")
+    fetch("https://gardening-hub-server-chi.vercel.app/getComment")
       .then((res) => res.json())
       .then((data) => {
         setComments(data);
@@ -96,6 +100,9 @@ const TipsDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>GardeningHub | Tip-Details</title>
+      </Helmet>
       <header>
         <Navbar></Navbar>
       </header>
